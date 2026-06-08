@@ -1,0 +1,9 @@
+node_modules/
+.env
+dev.db
+*.db
+uploads/*.jpg
+uploads/*.png
+uploads/*.jpeg
+uploads/*.webp
+!uploads/.gitkeep
