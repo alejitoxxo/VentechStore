@@ -7,7 +7,6 @@ const api = axios.create({
   baseURL: API_URL,
   timeout: 20000,
 });
-});
 
 // ─── Interceptors ─────────────────────────────────────────────────────────────
 
