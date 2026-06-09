@@ -1,9 +1,12 @@
 // src/services/api.js
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_API_URL || 'https://ventechstore.onrender.com/api';
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: API_URL,
   timeout: 20000,
+});
 });
 
 // ─── Interceptors ─────────────────────────────────────────────────────────────
