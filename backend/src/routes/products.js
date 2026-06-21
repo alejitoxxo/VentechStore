@@ -113,8 +113,7 @@ router.get('/', async (req, res) => {
       (!showOutOfStock || showOutOfStock.value === 'false') &&
       inStock === undefined
     ) {
-      // Don't force — let user see all active products
-      // They can filter by stock themselves
+      where.inStock = true;
     }
 
     const validSortFields = ['price', 'name', 'createdAt', 'code'];
