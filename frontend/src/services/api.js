@@ -1,17 +1,7 @@
 // src/services/api.js
 import axios from 'axios';
 
-const getApiUrl = () => {
-  if (import.meta.env.VITE_API_URL) {
-    return import.meta.env.VITE_API_URL;
-  }
-  if (typeof window !== 'undefined' && window.location.hostname === 'ventech-store-prod.vercel.app') {
-    return 'https://ventech-backend-wyoc.onrender.com/api';
-  }
-  return '/api';
-};
-
-const API_URL = getApiUrl();
+const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 const api = axios.create({
   baseURL: API_URL,

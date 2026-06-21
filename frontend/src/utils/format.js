@@ -25,16 +25,7 @@ export const getImageUrl = (url) => {
     return url;
   }
 
-  const getApiUrl = () => {
-    if (import.meta.env.VITE_API_URL) {
-      return import.meta.env.VITE_API_URL;
-    }
-    if (typeof window !== 'undefined' && window.location.hostname === 'ventech-store-prod.vercel.app') {
-      return 'https://ventech-backend-wyoc.onrender.com/api';
-    }
-    return '';
-  };
-  const apiUrl = getApiUrl();
+  const apiUrl = import.meta.env.VITE_API_URL || '';
   const backendUrl = apiUrl.replace(/\/api\/?$/, '');
 
   if (url.startsWith('/uploads')) {
