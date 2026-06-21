@@ -20,8 +20,24 @@ export const truncate = (str, n) =>
 
 export const getImageUrl = (url) => {
   if (!url) return null;
-  if (url.startsWith('http')) return url;
-  return url; // proxy handles /uploads/...
+
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    return url;
+  }
+
+  const apiUrl = import.meta.env.VITE_API_URL || '';
+  const backendUrl = apiUrl.replace(/\/api\/?$/, '');
+
+  if (url.startsWith('/uploads')) {
+    return backendUrl ? `${backendUrl}${url}` : url;
+  }
+
+  if (url.startsWith('uploads/')) {
+    const normalizedUrl = `/${url}`;
+    return backendUrl ? `${backendUrl}${normalizedUrl}` : normalizedUrl;
+  }
+
+  return url;
 };
 
 export const downloadBlob = (blob, filename) => {
