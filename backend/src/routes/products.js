@@ -23,10 +23,9 @@ router.get('/admin/all', authenticate, async (req, res) => {
     const where = {};
 
     if (search) {
-      // SQLite doesn't support mode:'insensitive' — use plain contains
       where.OR = [
-        { name: { contains: search } },
-        { code: { contains: search } },
+        { name: { contains: search, mode: 'insensitive' } },
+        { code: { contains: search, mode: 'insensitive' } },
       ];
     }
     if (category) where.category = { slug: category };
@@ -96,11 +95,10 @@ router.get('/', async (req, res) => {
     if (featured === 'true') where.featured = true;
     if (isNew === 'true') where.isNew = true;
 
-    // SQLite: contains is case-sensitive by default, no mode needed
     if (search) {
       where.OR = [
-        { name: { contains: search } },
-        { code: { contains: search } },
+        { name: { contains: search, mode: 'insensitive' } },
+        { code: { contains: search, mode: 'insensitive' } },
       ];
     }
 
