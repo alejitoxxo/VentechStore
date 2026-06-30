@@ -14,6 +14,10 @@ export default function AdminSettingsPage() {
     whatsappMessage: '',
     mode: 'minorista',
     accentColor: '#2563EB',
+    logoUrl: '',
+    bannerUrl: '',
+    heroTitle: '',
+    heroSubtitle: '',
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -125,7 +129,7 @@ export default function AdminSettingsPage() {
         {/* Apariencia */}
         <div className="card p-5 space-y-4">
           <h3 className="font-semibold text-dark flex items-center gap-2">
-            <Palette size={16} className="text-primary" /> Apariencia
+            <Palette size={16} className="text-primary" /> Apariencia y Diseño
           </h3>
           <div>
             <label className="block text-sm font-medium text-dark mb-1.5">Color de acento</label>
@@ -136,6 +140,28 @@ export default function AdminSettingsPage() {
                 className="input font-mono w-36" placeholder="#2563EB" />
               <div className="w-10 h-10 rounded-lg border border-gray-200" style={{ background: form.accentColor }} />
             </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-dark mb-1.5">URL del Logo Comercial</label>
+            <input type="text" name="logoUrl" value={form.logoUrl || ''} onChange={handleChange}
+              className="input font-mono text-sm" placeholder="https://ejemplo.com/logo.png" />
+            <p className="text-xs text-muted mt-1">Ingresá un link directo a la imagen. Si queda vacío, se usará el logo por defecto.</p>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-dark mb-1.5">URL del Banner Principal (Hero)</label>
+            <input type="text" name="bannerUrl" value={form.bannerUrl || ''} onChange={handleChange}
+              className="input font-mono text-sm" placeholder="https://ejemplo.com/banner.jpg" />
+            <p className="text-xs text-muted mt-1">Link directo a la imagen de fondo del Hero del inicio.</p>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-dark mb-1.5">Título del Hero Principal</label>
+            <input type="text" name="heroTitle" value={form.heroTitle || ''} onChange={handleChange}
+              className="input" placeholder="Todo lo que necesitás en tech" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-dark mb-1.5">Subtítulo del Hero Principal</label>
+            <textarea name="heroSubtitle" value={form.heroSubtitle || ''} onChange={handleChange}
+              className="input resize-none" rows={2} placeholder="Accesorios, audio, gaming, cables..." />
           </div>
         </div>
 

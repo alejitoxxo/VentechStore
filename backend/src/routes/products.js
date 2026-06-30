@@ -262,6 +262,33 @@ router.put('/:id', authenticate, async (req, res) => {
   }
 });
 
+// DELETE /api/products/bulk
+router.delete('/bulk', authenticate, async (req, res) => {
+  try {
+    const { ids } = req.body;
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ error: 'Se requiere un array de IDs no vacío' });
+    }
+
+    // Normalizar y validar que todos los IDs sean enteros válidos
+    const parsedIds = ids.map(id => parseInt(id, 10)).filter(id => !isNaN(id));
+    if (parsedIds.length === 0) {
+      return res.status(400).json({ error: 'IDs provistos son inválidos' });
+    }
+
+    const result = await prisma.product.deleteMany({
+      where: {
+        id: { in: parsedIds }
+      }
+    });
+
+    res.json({ message: 'Productos eliminados', count: result.count });
+  } catch (err) {
+    console.error('Bulk delete error:', err);
+    res.status(500).json({ error: 'Error eliminando productos en lote' });
+  }
+});
+
 // DELETE /api/products/:id
 router.delete('/:id', authenticate, async (req, res) => {
   try {

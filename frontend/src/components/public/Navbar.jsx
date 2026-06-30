@@ -34,7 +34,22 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
+            {settings.logoUrl ? (
+              <img
+                src={settings.logoUrl}
+                alt={settings.businessName || 'Ventech'}
+                className="h-8 object-contain max-w-[120px] rounded group-hover:scale-105 transition-transform duration-200"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  const fallbackDiv = e.target.nextSibling;
+                  if (fallbackDiv) fallbackDiv.style.display = 'flex';
+                }}
+              />
+            ) : null}
+            <div
+              className={`${settings.logoUrl ? 'hidden' : 'flex'} w-8 h-8 bg-primary rounded-lg items-center justify-center group-hover:scale-105 transition-transform`}
+              style={{ display: settings.logoUrl ? 'none' : 'flex' }}
+            >
               <Zap size={16} className="text-white" fill="white" />
             </div>
             <span className="font-display text-xl font-bold text-dark">

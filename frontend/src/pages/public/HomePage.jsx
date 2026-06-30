@@ -43,12 +43,33 @@ export default function HomePage() {
     <div>
       {/* Hero */}
       <section className="relative bg-dark overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: 'radial-gradient(circle at 20% 50%, #2563EB 0%, transparent 50%), radial-gradient(circle at 80% 20%, #1F2E35 0%, transparent 50%)',
-          }}
-        />
+        {settings.bannerUrl ? (
+          <div className="absolute inset-0">
+            <img
+              src={settings.bannerUrl}
+              alt="Banner"
+              className="w-full h-full object-cover opacity-20"
+              onError={(e) => {
+                e.target.style.display = 'none';
+                const fallbackBg = e.target.nextSibling;
+                if (fallbackBg) fallbackBg.style.display = 'block';
+              }}
+            />
+            <div
+              className="absolute inset-0 hidden opacity-10"
+              style={{
+                backgroundImage: 'radial-gradient(circle at 20% 50%, #2563EB 0%, transparent 50%), radial-gradient(circle at 80% 20%, #1F2E35 0%, transparent 50%)',
+              }}
+            />
+          </div>
+        ) : (
+          <div
+            className="absolute inset-0 opacity-10"
+            style={{
+              backgroundImage: 'radial-gradient(circle at 20% 50%, #2563EB 0%, transparent 50%), radial-gradient(circle at 80% 20%, #1F2E35 0%, transparent 50%)',
+            }}
+          />
+        )}
         <div className="absolute inset-0" style={{
           backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.03\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
         }} />
@@ -60,11 +81,17 @@ export default function HomePage() {
               Tecnología a tu alcance
             </div>
             <h1 className="font-display text-4xl md:text-6xl font-extrabold text-white leading-tight mb-6">
-              Todo lo que<br />
-              <span className="text-primary">necesitás</span> en tech
+              {settings.heroTitle ? (
+                settings.heroTitle
+              ) : (
+                <>
+                  Todo lo que<br />
+                  <span className="text-primary">necesitás</span> en tech
+                </>
+              )}
             </h1>
             <p className="text-gray-400 text-lg md:text-xl mb-8 max-w-xl leading-relaxed">
-              Accesorios, audio, gaming, cables, cargadores y más. Calidad garantizada para revendedores y consumidores finales.
+              {settings.heroSubtitle || 'Accesorios, audio, gaming, cables, cargadores y más. Calidad garantizada para revendedores y consumidores finales.'}
             </p>
             <div className="flex flex-wrap gap-3">
               <Link to="/catalogo" className="btn-primary text-base px-6 py-3">

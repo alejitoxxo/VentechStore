@@ -67,6 +67,9 @@ export const updateProduct = (id, data) =>
 export const deleteProduct = (id) =>
   api.delete(`/products/${id}`);
 
+export const deleteProductsBulk = (ids) =>
+  api.delete('/products/bulk', { data: { ids } });
+
 export const toggleProductActive = (id) =>
   api.patch(`/products/${id}/toggle-active`);
 

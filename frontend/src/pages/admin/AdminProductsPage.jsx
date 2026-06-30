@@ -6,7 +6,7 @@ import {
   Package, ToggleLeft, ToggleRight, Star, RefreshCw
 } from 'lucide-react';
 import {
-  getAdminProducts, deleteProduct,
+  getAdminProducts, deleteProduct, deleteProductsBulk,
   toggleProductActive, toggleProductStock, toggleProductFeatured,
   getAdminCategories
 } from '../../services/api';
@@ -28,9 +28,11 @@ export default function AdminProductsPage() {
   const [stockFilter, setStockFilter] = useState('');
   const [page, setPage] = useState(1);
   const [confirm, setConfirm] = useState(null);
+  const [selectedIds, setSelectedIds] = useState([]);
 
   const fetchProducts = useCallback(() => {
     setLoading(true);
+    setSelectedIds([]);
     const params = { page, limit: 20 };
     if (search) params.search = search;
     if (categoryFilter) params.category = categoryFilter;
@@ -75,6 +77,32 @@ export default function AdminProductsPage() {
     } catch { toast.error('Error al eliminar'); }
   };
 
+  const handleSelectOne = (id) => {
+    setSelectedIds(prev => 
+      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+    );
+  };
+
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      setSelectedIds(products.map(p => p.id));
+    } else {
+      setSelectedIds([]);
+    }
+  };
+
+  const handleDeleteBulk = async () => {
+    try {
+      await deleteProductsBulk(selectedIds);
+      toast.success('Productos eliminados');
+      setSelectedIds([]);
+      setConfirm(null);
+      fetchProducts();
+    } catch {
+      toast.error('Error al eliminar productos');
+    }
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
@@ -84,9 +112,19 @@ export default function AdminProductsPage() {
             <p className="text-muted text-sm">{pagination.total} productos en total</p>
           )}
         </div>
-        <Link to="/admin/productos/nuevo" className="btn-primary">
-          <Plus size={16} /> Nuevo producto
-        </Link>
+        <div className="flex items-center gap-3">
+          {selectedIds.length > 0 && (
+            <button
+              onClick={() => setConfirm({ bulk: true })}
+              className="btn-danger"
+            >
+              <Trash2 size={16} /> Eliminar seleccionados ({selectedIds.length})
+            </button>
+          )}
+          <Link to="/admin/productos/nuevo" className="btn-primary">
+            <Plus size={16} /> Nuevo producto
+          </Link>
+        </div>
       </div>
 
       {/* Filters */}
@@ -131,6 +169,14 @@ export default function AdminProductsPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-gray-100 bg-gray-50">
+                  <th className="px-4 py-3 w-10 text-center">
+                    <input
+                      type="checkbox"
+                      checked={products.length > 0 && products.every(p => selectedIds.includes(p.id))}
+                      onChange={handleSelectAll}
+                      className="rounded border-gray-300 text-primary focus:ring-primary cursor-pointer animate-fade-in"
+                    />
+                  </th>
                   <th className="text-left px-4 py-3 text-xs font-semibold text-muted uppercase tracking-wide">Código</th>
                   <th className="text-left px-4 py-3 text-xs font-semibold text-muted uppercase tracking-wide">Nombre</th>
                   <th className="text-left px-4 py-3 text-xs font-semibold text-muted uppercase tracking-wide hidden md:table-cell">Categoría</th>
@@ -144,6 +190,14 @@ export default function AdminProductsPage() {
               <tbody className="divide-y divide-gray-50">
                 {products.map(p => (
                   <tr key={p.id} className="hover:bg-gray-50/50 transition-colors">
+                    <td className="px-4 py-3 w-10 text-center">
+                      <input
+                        type="checkbox"
+                        checked={selectedIds.includes(p.id)}
+                        onChange={() => handleSelectOne(p.id)}
+                        className="rounded border-gray-300 text-primary focus:ring-primary cursor-pointer"
+                      />
+                    </td>
                     <td className="px-4 py-3 font-mono text-xs text-muted">{p.code}</td>
                     <td className="px-4 py-3">
                       <p className="font-medium text-dark text-sm line-clamp-1 max-w-[200px]">{p.name}</p>
@@ -210,9 +264,9 @@ export default function AdminProductsPage() {
 
       <ConfirmDialog
         open={!!confirm}
-        title="Eliminar producto"
-        message={`¿Seguro que querés eliminar "${confirm?.name}"? Esta acción no se puede deshacer.`}
-        onConfirm={handleDelete}
+        title={confirm?.bulk ? "Eliminar productos" : "Eliminar producto"}
+        message={confirm?.bulk ? `Vas a eliminar ${selectedIds.length} productos. Esta acción no se puede deshacer.` : `¿Seguro que querés eliminar "${confirm?.name}"? Esta acción no se puede deshacer.`}
+        onConfirm={confirm?.bulk ? handleDeleteBulk : handleDelete}
         onCancel={() => setConfirm(null)}
       />
     </div>

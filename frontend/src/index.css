@@ -44,6 +44,10 @@
     @apply bg-whatsapp text-white font-semibold px-5 py-2.5 rounded-xl hover:opacity-90 transition-all duration-200 active:scale-95 inline-flex items-center gap-2;
   }
 
+  .btn-danger {
+    @apply bg-red-600 text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-red-700 transition-all duration-200 active:scale-95 inline-flex items-center gap-2;
+  }
+
   .btn-ghost {
     @apply text-muted font-medium px-4 py-2 rounded-lg hover:bg-gray-100 hover:text-dark transition-all duration-200 inline-flex items-center gap-2;
   }
