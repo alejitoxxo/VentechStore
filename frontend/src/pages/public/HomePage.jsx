@@ -48,13 +48,14 @@ export default function HomePage() {
             <img
               src={settings.bannerUrl}
               alt="Banner"
-              className="w-full h-full object-cover opacity-20"
+              className="w-full h-full object-cover opacity-45 object-[center_35%]"
               onError={(e) => {
                 e.target.style.display = 'none';
                 const fallbackBg = e.target.nextSibling;
                 if (fallbackBg) fallbackBg.style.display = 'block';
               }}
             />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 to-transparent" />
             <div
               className="absolute inset-0 hidden opacity-10"
               style={{
