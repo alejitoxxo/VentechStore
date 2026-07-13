@@ -1,339 +1,385 @@
-# 🚀 Ventech E-commerce
+# VentechStore
 
-Plataforma de catálogo/e-commerce para Ventech.  
-Stack: **React + Vite + Tailwind** (frontend) · **Node.js + Express + Prisma + SQLite** (backend)
+Catalogo web/e-commerce liviano para productos tecnologicos con consulta por WhatsApp.
 
----
+VentechStore permite publicar productos, organizar categorias, mostrar fichas individuales y derivar consultas o pedidos a WhatsApp con un mensaje armado automaticamente. La tienda no procesa pagos online: el cierre comercial ocurre por WhatsApp.
 
-## ⚡ Inicio rápido (local)
+## Estado actual
 
-### 1. Backend
+- MVP tecnico listo.
+- Produccion activa.
+- Frontend desplegado en Vercel.
+- Backend desplegado en Render.
+- Base de datos en Neon PostgreSQL.
+- Admin operativo.
+- Catalogo, busqueda, categorias, detalle de producto, WhatsApp, settings y bulk delete funcionando.
+- Rama estable oficial: `main`.
+- Hito estable importante: `47f2846 feat: implement product bulk delete and dynamic visual settings configuration`.
+
+Ultima auditoria local: el repositorio estaba limpio en `main`, el health check de produccion respondia `200 OK` y Prisma validaba correctamente el schema PostgreSQL.
+
+## URLs principales
+
+- Web publica: https://ventech-store-prod.vercel.app/
+- Admin: https://ventech-store-prod.vercel.app/admin/login
+- Backend API base: https://ventech-backend-wyoc.onrender.com/api
+- Health check: https://ventech-backend-wyoc.onrender.com/api/health
+
+## Stack tecnologico
+
+### Frontend
+
+- React
+- Vite
+- Tailwind CSS
+- React Router
+- Axios
+- React Hot Toast
+- Lucide Icons
+- Deploy en Vercel
+
+### Backend
+
+- Node.js
+- Express
+- Prisma ORM
+- JWT
+- CORS
+- Bcrypt
+- Multer
+- Deploy en Render
+
+### Base de datos
+
+- Neon PostgreSQL
+- Prisma como capa ORM
+
+## Funcionalidades publicas
+
+- Home.
+- Catalogo de productos.
+- Pagina de categorias.
+- Busqueda case-insensitive.
+- Paginacion.
+- Ficha individual de producto.
+- Boton flotante de WhatsApp.
+- Lista de consulta/pedido por WhatsApp.
+- Mensaje automatico con producto, codigo y precio.
+- Diseno responsive.
+- Logo dinamico desde settings, si esta configurado.
+- Banner dinamico desde settings, si esta configurado.
+- Titulo y subtitulo dinamicos del hero desde settings, si estan configurados.
+
+## Funcionalidades admin
+
+- Login protegido por JWT.
+- Dashboard.
+- CRUD de productos.
+- CRUD de categorias.
+- Borrado masivo de productos.
+- Upload de imagenes de producto.
+- Import/export JSON y CSV disponible en codigo.
+- Settings comerciales:
+  - Nombre de tienda.
+  - WhatsApp.
+  - Instagram.
+  - Mensaje predeterminado.
+  - Modo de venta.
+  - Mostrar/ocultar productos sin stock.
+  - Color de acento.
+- Settings visuales:
+  - `logoUrl`
+  - `bannerUrl`
+  - `heroTitle`
+  - `heroSubtitle`
+
+## Flujo de consulta
+
+1. El cliente entra a la tienda.
+2. Busca o navega productos.
+3. Revisa el detalle del producto.
+4. Agrega productos a la consulta o usa el boton de WhatsApp.
+5. La app arma un mensaje con los datos del producto.
+6. El cliente es redirigido a WhatsApp para cerrar la venta.
+
+No hay carrito de pago ni checkout online. La web funciona como catalogo comercial con derivacion a WhatsApp.
+
+## Estructura del repositorio
+
+```text
+ventech-ecommerce/
+|-- frontend/
+|   |-- src/
+|   |   |-- App.jsx
+|   |   |-- main.jsx
+|   |   |-- components/
+|   |   |   |-- layout/
+|   |   |   |-- public/
+|   |   |   `-- ui/
+|   |   |-- hooks/
+|   |   |-- pages/
+|   |   |   |-- admin/
+|   |   |   `-- public/
+|   |   |-- services/
+|   |   |   `-- api.js
+|   |   `-- utils/
+|   |-- public/
+|   |-- vite.config.js
+|   |-- vercel.json
+|   `-- package.json
+|-- backend/
+|   |-- prisma/
+|   |   |-- schema.prisma
+|   |   |-- seed.js
+|   |   `-- migrations/
+|   |-- src/
+|   |   |-- index.js
+|   |   |-- middlewares/
+|   |   `-- routes/
+|   |       |-- auth.js
+|   |       |-- categories.js
+|   |       |-- dashboard.js
+|   |       |-- export.js
+|   |       |-- import.js
+|   |       |-- products.js
+|   |       |-- settings.js
+|   |       `-- upload.js
+|   |-- uploads/
+|   `-- package.json
+|-- setup.sh
+`-- README.md
+```
+
+### Carpetas clave
+
+- `frontend/`: aplicacion React/Vite.
+- `frontend/src/services/api.js`: cliente Axios, `VITE_API_URL`, token JWT e interceptores.
+- `frontend/vite.config.js`: proxy local de `/api` y `/uploads` hacia `localhost:3001`.
+- `frontend/vercel.json`: rewrite SPA hacia `index.html`.
+- `backend/`: API Express.
+- `backend/src/index.js`: entrada del servidor, CORS, rutas y health check.
+- `backend/src/routes/`: endpoints de negocio.
+- `backend/prisma/schema.prisma`: modelos `User`, `Category`, `Product`, `Tag`, `ProductTag` y `Setting`.
+- `backend/uploads/`: imagenes subidas; los archivos reales estan ignorados por Git salvo `.gitkeep`.
+
+Nota: existe una carpeta residual llamada `{frontend/` sin archivos relevantes detectados. Revisar antes de borrarla.
+
+## Variables de entorno
+
+No commitear archivos `.env` ni compartir valores reales.
+
+### Frontend
+
+- `VITE_API_URL`
+
+`VITE_API_URL` apunta a la API de produccion cuando el frontend esta desplegado. En desarrollo, si no esta definida, el frontend usa `/api` y Vite lo proxyea al backend local.
+
+### Backend
+
+- `DATABASE_URL`
+- `JWT_SECRET`
+- `JWT_EXPIRES_IN`
+- `NODE_ENV`
+- `FRONTEND_URL`
+- `PORT`
+
+El backend actual usa PostgreSQL. No usar valores SQLite antiguos en entornos actuales salvo que se este preparando una instancia local aislada y consciente.
+
+## Instalacion local
+
+### Backend
 
 ```bash
 cd backend
-
-# Instalar dependencias
 npm install
-
-# Copiar variables de entorno
-cp .env.example .env
-# ⚠️  Editá .env: cambiá JWT_SECRET por una cadena larga y aleatoria
-
-# Generar cliente Prisma
 npx prisma generate
-
-# Crear la base de datos y tablas
-npx prisma migrate dev --name init
-
-# Cargar datos iniciales (admin + categorías + productos de prueba)
-npm run seed
-
-# Iniciar servidor de desarrollo
 npm run dev
 ```
 
-Backend corriendo en → **http://localhost:3001**
+El backend local queda disponible en:
 
----
+```text
+http://localhost:3001
+```
 
-### 2. Frontend (nueva terminal)
+Health check local:
+
+```text
+http://localhost:3001/api/health
+```
+
+### Frontend
 
 ```bash
 cd frontend
-
-# Instalar dependencias
 npm install
-
-# Iniciar en desarrollo
 npm run dev
 ```
 
-Frontend corriendo en → **http://localhost:5173**
+El frontend local queda disponible en:
 
----
-
-## 🔐 Acceso al panel admin
-
-```
-URL:       http://localhost:5173/admin
-Email:     admin@ventech.store
-Password:  Admin123456
+```text
+http://localhost:5173
 ```
 
-> ⚠️ **Cambiá la contraseña después del primer acceso** desde Configuración → Cambiar contraseña.
+## Desarrollo local
 
----
+- Levantar primero el backend en `localhost:3001`.
+- Levantar despues el frontend en `localhost:5173`.
+- El frontend consume `/api` y `/uploads`; Vite redirige esas rutas al backend local.
+- Si se cambia el schema Prisma, ejecutar `npx prisma generate`.
+- No ejecutar `npm run seed` contra una base real sin confirmar primero: puede crear o alterar datos iniciales.
+- No ejecutar migraciones destructivas ni reset de base sin backup y aprobacion explicita.
 
-## 📦 Cómo importar tus 1228 productos
+## Build
 
-### Opción A — Panel admin (recomendado)
+### Frontend
 
-1. Ir a **Admin → Importar**
-2. Preparar un archivo `productos.json`:
-
-```json
-[
-  {
-    "code": "12253",
-    "name": "AURICULAR AITECH FLAT AI-300 ML",
-    "category": "AURICULARES",
-    "price": 1194,
-    "stock": true,
-    "active": true,
-    "featured": false
-  },
-  {
-    "code": "10293",
-    "name": "COMBO INALAMBRICO NOGA METALIZADO S5600",
-    "category": "TECLADOS Y MOUSE",
-    "price": 19750,
-    "stock": true,
-    "active": true,
-    "featured": true
-  }
-]
-```
-
-3. Subir el archivo → ver reporte de importación
-4. Las categorías que no existan **se crean automáticamente**
-
-### Opción B — CSV
-
-```
-code,name,category,price,stock,active,featured
-12253,AURICULAR AITECH FLAT AI-300 ML,AURICULARES,1194,true,true,false
-10293,COMBO INALAMBRICO NOGA S5600,TECLADOS Y MOUSE,19750,true,true,true
-```
-
----
-
-## 🌐 Endpoints de la API
-
-### Auth
-| Método | Ruta | Auth | Descripción |
-|--------|------|------|-------------|
-| POST | `/api/auth/login` | ❌ | Login, devuelve JWT |
-| GET | `/api/auth/me` | ✅ | Usuario actual |
-| POST | `/api/auth/logout` | ❌ | (client-side) |
-| POST | `/api/auth/change-password` | ✅ | Cambiar contraseña |
-
-### Productos
-| Método | Ruta | Auth | Descripción |
-|--------|------|------|-------------|
-| GET | `/api/products` | ❌ | Listado público con filtros |
-| GET | `/api/products/:id` | ❌ | Producto público por id/slug/code |
-| GET | `/api/products/admin/all` | ✅ | Listado admin (todos los estados) |
-| GET | `/api/products/admin/:id` | ✅ | Producto admin por id |
-| POST | `/api/products` | ✅ | Crear producto |
-| PUT | `/api/products/:id` | ✅ | Editar producto |
-| DELETE | `/api/products/:id` | ✅ | Eliminar producto |
-| PATCH | `/api/products/:id/toggle-active` | ✅ | Activar/desactivar |
-| PATCH | `/api/products/:id/toggle-stock` | ✅ | Cambiar stock |
-| PATCH | `/api/products/:id/featured` | ✅ | Destacar/quitar destaque |
-
-### Categorías
-| Método | Ruta | Auth | Descripción |
-|--------|------|------|-------------|
-| GET | `/api/categories` | ❌ | Listado público activo |
-| GET | `/api/categories/admin/all` | ✅ | Listado admin completo |
-| POST | `/api/categories` | ✅ | Crear categoría |
-| PUT | `/api/categories/:id` | ✅ | Editar categoría |
-| DELETE | `/api/categories/:id` | ✅ | Eliminar (si no tiene productos) |
-
-### Import / Export / Upload
-| Método | Ruta | Auth | Descripción |
-|--------|------|------|-------------|
-| POST | `/api/import/products/json` | ✅ | Importar archivo JSON |
-| POST | `/api/import/products/csv` | ✅ | Importar archivo CSV |
-| GET | `/api/export/products/json` | ✅ | Exportar JSON |
-| GET | `/api/export/products/csv` | ✅ | Exportar CSV (con BOM Excel) |
-| POST | `/api/upload/product-image` | ✅ | Subir imagen (max 5MB) |
-
-### Otros
-| Método | Ruta | Auth | Descripción |
-|--------|------|------|-------------|
-| GET | `/api/settings` | ❌ | Configuración pública |
-| PUT | `/api/settings` | ✅ | Actualizar configuración |
-| GET | `/api/dashboard/stats` | ✅ | Estadísticas del panel |
-| GET | `/api/health` | ❌ | Health check |
-
----
-
-## 🏗️ Estructura del proyecto
-
-```
-ventech-ecommerce/
-│
-├── backend/
-│   ├── prisma/
-│   │   ├── schema.prisma        ← Modelos DB (User, Product, Category, Setting, Tag)
-│   │   └── seed.js              ← Admin inicial + categorías + productos de prueba
-│   ├── src/
-│   │   ├── index.js             ← Entry point Express
-│   │   ├── middlewares/
-│   │   │   └── auth.js          ← Verificación JWT
-│   │   └── routes/
-│   │       ├── auth.js          ← Login, me, change-password
-│   │       ├── products.js      ← CRUD + toggles
-│   │       ├── categories.js    ← CRUD categorías
-│   │       ├── upload.js        ← Upload de imágenes
-│   │       ├── import.js        ← Importador JSON/CSV
-│   │       ├── export.js        ← Exportador JSON/CSV
-│   │       ├── settings.js      ← Configuración del negocio
-│   │       └── dashboard.js     ← Estadísticas admin
-│   ├── uploads/                 ← Imágenes subidas (gitignored)
-│   ├── .env                     ← Variables locales (gitignored)
-│   ├── .env.example             ← Plantilla de variables
-│   └── package.json
-│
-└── frontend/
-    ├── src/
-    │   ├── App.jsx              ← Router principal (React Router v6)
-    │   ├── main.jsx             ← Entry point React
-    │   ├── index.css            ← Tailwind + estilos globales
-    │   ├── components/
-    │   │   ├── layout/
-    │   │   │   ├── PublicLayout.jsx   ← Navbar + Footer + WhatsApp float
-    │   │   │   └── AdminLayout.jsx    ← Sidebar admin + topbar
-    │   │   ├── public/
-    │   │   │   ├── Navbar.jsx
-    │   │   │   ├── Footer.jsx
-    │   │   │   ├── ProductCard.jsx    ← Tarjeta de producto con acciones
-    │   │   │   └── WhatsAppFloat.jsx  ← Botón flotante WhatsApp
-    │   │   └── ui/
-    │   │       ├── Skeleton.jsx       ← Loaders shimmer
-    │   │       ├── EmptyState.jsx     ← Estado vacío
-    │   │       ├── ConfirmDialog.jsx  ← Confirmación antes de eliminar
-    │   │       └── Pagination.jsx     ← Paginación
-    │   ├── pages/
-    │   │   ├── public/
-    │   │   │   ├── HomePage.jsx       ← Hero + categorías + destacados + novedades
-    │   │   │   ├── CatalogPage.jsx    ← Catálogo con filtros + paginación
-    │   │   │   ├── ProductPage.jsx    ← Detalle de producto
-    │   │   │   ├── CategoriesPage.jsx ← Grilla de categorías
-    │   │   │   ├── CartPage.jsx       ← Lista de consulta WhatsApp
-    │   │   │   └── NotFoundPage.jsx   ← 404
-    │   │   └── admin/
-    │   │       ├── LoginPage.jsx
-    │   │       ├── DashboardPage.jsx
-    │   │       ├── AdminProductsPage.jsx    ← Tabla con edición rápida
-    │   │       ├── AdminProductFormPage.jsx ← Crear/editar producto
-    │   │       ├── AdminCategoriesPage.jsx  ← CRUD categorías inline
-    │   │       ├── AdminImportPage.jsx      ← Importar/exportar
-    │   │       └── AdminSettingsPage.jsx    ← Configuración del negocio
-    │   ├── hooks/
-    │   │   ├── useAuth.js        ← Contexto de autenticación
-    │   │   ├── useCart.js        ← Carrito/lista de consulta (localStorage)
-    │   │   └── useSettings.js    ← Configuración global del negocio
-    │   ├── services/
-    │   │   └── api.js            ← Axios con interceptores JWT
-    │   └── utils/
-    │       └── format.js         ← formatPrice, formatDate, downloadBlob
-    ├── index.html
-    ├── vite.config.js            ← Proxy /api → localhost:3001
-    ├── tailwind.config.js
-    └── package.json
-```
-
----
-
-## 🚀 Deploy a producción
-
-### Backend — Railway / Render / Hostinger VPS
-
-**Variables de entorno requeridas:**
-```env
-DATABASE_URL="file:./prod.db"
-JWT_SECRET="cadena-aleatoria-muy-larga-minimo-32-caracteres"
-JWT_EXPIRES_IN="7d"
-PORT=3001
-NODE_ENV=production
-FRONTEND_URL="https://tu-dominio.com"
-```
-
-**Comandos de build:**
 ```bash
-npm install
-npx prisma generate
-npx prisma migrate deploy
-npm run seed
+cd frontend
+npm run build
 ```
 
-**Comando de inicio:**
+Salida esperada:
+
+```text
+frontend/dist
+```
+
+### Backend
+
+El backend no tiene paso de build. En produccion se usa:
+
 ```bash
+cd backend
 npm start
 ```
 
-### Migrar a PostgreSQL (producción)
+Antes de iniciar en un entorno nuevo:
 
-En `backend/prisma/schema.prisma`, cambiar:
-```prisma
-datasource db {
-  provider = "postgresql"   # ← antes era "sqlite"
-  url      = env("DATABASE_URL")
-}
-```
-
-Y usar una URL de PostgreSQL:
-```env
-DATABASE_URL="postgresql://user:password@host:5432/ventech?schema=public"
-```
-
-### Frontend — Vercel / Netlify
-
-1. Build command: `npm run build`
-2. Output directory: `dist`
-3. Agregar variable de entorno si el backend está en otro dominio:
-
-En `frontend/vite.config.js`, el proxy ya está configurado para desarrollo.  
-En producción, crear `frontend/.env.production`:
-```env
-VITE_API_URL=https://tu-backend.onrender.com
-```
-
-Y actualizar `frontend/src/services/api.js`:
-```js
-baseURL: import.meta.env.VITE_API_URL || '/api',
-```
-
----
-
-## 🐛 Troubleshooting
-
-**Error: `@prisma/client did not initialize`**
 ```bash
-cd backend && npx prisma generate
+npx prisma generate
 ```
 
-**Error: `Table not found`**
-```bash
-cd backend && npx prisma migrate dev --name init
-```
+## Deploy
 
-**Error de CORS**
-- Verificar que `FRONTEND_URL` en `.env` coincida exactamente con la URL del frontend
+### Frontend: Vercel
 
-**Ver base de datos visualmente**
-```bash
-cd backend && npx prisma studio
-# Abre http://localhost:5555
-```
+- Build command: `npm run build`
+- Output directory: `dist`
+- Variable requerida: `VITE_API_URL`
 
----
+### Backend: Render
 
-## 🔮 Mejoras futuras
+- Start command: `npm start`
+- Variables requeridas:
+  - `DATABASE_URL`
+  - `JWT_SECRET`
+  - `JWT_EXPIRES_IN`
+  - `NODE_ENV`
+  - `FRONTEND_URL`
+  - `PORT`
 
-| Feature | Descripción |
-|---------|-------------|
-| MercadoPago | Integración de pagos online |
-| Multi-usuario | Roles: admin, operador, vendedor |
-| Estadísticas | Consultas por producto, conversión |
-| PDF importer | Extraer productos directo del PDF de Distriphone |
-| Instagram | Auto-publicar productos como stories/posts |
-| Flyers IA | Generación automática con Claude/GPT |
-| Cupones | Sistema de descuentos por código |
-| Historial | Registro de consultas por WhatsApp |
+Importante: el plan gratuito de Render puede dormir el servicio. El primer request despues de inactividad puede tardar aproximadamente 10 a 15 segundos.
 
----
+### Base de datos: Neon
 
-*Ventech © 2025*
+- PostgreSQL gestionado.
+- Prisma se conecta usando `DATABASE_URL`.
+- Rotar credenciales si fueron expuestas o compartidas fuera de un entorno seguro.
+
+## Endpoints principales
+
+- `GET /api/health`: health check.
+- `GET /api/products`: listado publico de productos con filtros/paginacion.
+- `GET /api/products/:id`: producto publico por id, slug o codigo.
+- `POST /api/products`: crear producto, requiere auth.
+- `PUT /api/products/:id`: editar producto, requiere auth.
+- `DELETE /api/products/:id`: eliminar producto, requiere auth.
+- `DELETE /api/products/bulk`: borrado masivo, requiere auth.
+- `GET /api/categories`: categorias publicas activas.
+- `GET /api/categories/admin/all`: categorias admin, requiere auth.
+- `GET /api/settings`: settings publicos.
+- `PUT /api/settings`: actualizar settings, requiere auth.
+- `POST /api/auth/login`: login admin.
+- `GET /api/auth/me`: usuario actual, requiere auth.
+- `GET /api/dashboard/stats`: dashboard admin, requiere auth.
+
+## Seguridad
+
+- No commitear `.env`.
+- No compartir `DATABASE_URL`.
+- No compartir `JWT_SECRET`.
+- No imprimir tokens completos en logs, issues, commits o documentacion.
+- Cambiar la contrasena final del admin antes de publicitar fuerte.
+- Rotar credenciales de Neon si alguna vez fueron expuestas.
+- Hacer backup/export antes de limpiar productos reales.
+- No borrar categorias, settings, usuarios ni credenciales sin aprobacion explicita.
+
+## Estado comercial pendiente
+
+La base tecnica esta lista. Antes de publicitar fuerte conviene cerrar:
+
+- Nombre comercial final.
+- WhatsApp definitivo.
+- Instagram.
+- Logo real.
+- Banner real.
+- `heroTitle` y `heroSubtitle` finales.
+- Imagenes de productos principales.
+- Limpieza de productos de prueba o no deseados, siempre con backup/export previo.
+- Contrasena final del admin.
+- Rotacion de credenciales sensibles.
+- Posible upgrade de Render para evitar espera por cold start.
+
+## Checklist QA rapido
+
+- Abrir web publica.
+- Probar catalogo.
+- Probar busqueda.
+- Probar categorias.
+- Probar producto individual.
+- Probar boton/lista de WhatsApp.
+- Verificar mensaje automatico con producto, codigo y precio.
+- Probar login admin.
+- Probar dashboard.
+- Crear/editar un producto de prueba.
+- Probar bulk delete solo con producto de prueba.
+- Probar settings comerciales.
+- Probar settings visuales: `logoUrl`, `bannerUrl`, `heroTitle`, `heroSubtitle`.
+- Verificar responsive en mobile y desktop.
+- Verificar `/api/health`.
+
+## Cosas que no conviene tocar sin un bug real
+
+- Logica de WhatsApp.
+- Busqueda.
+- Prisma schema principal.
+- CORS.
+- Deploy de Vercel/Render.
+- Variables de entorno.
+- Credenciales.
+- Usuarios admin.
+- Categorias reales.
+- Settings reales.
+
+## Historial breve de hitos
+
+- Migracion a PostgreSQL/Neon.
+- Deploy de frontend en Vercel.
+- Deploy de backend en Render.
+- Fix de `VITE_API_URL` para produccion.
+- Implementacion de bulk delete.
+- Settings visuales dinamicos: `logoUrl`, `bannerUrl`, `heroTitle`, `heroSubtitle`.
+- Ajustes de banner/asset en Vite y rewrites de Vercel.
+
+## Reglas para futuros agentes
+
+- Partir siempre desde `main` para trabajo nuevo.
+- Crear una rama nueva para cambios no triviales.
+- Hacer cambios pequenos y faciles de revisar.
+- Probar antes de proponer commit.
+- No hacer merge a `main` sin aprobacion.
+- No hacer deploy manual sin avisar.
+- No ejecutar seed, migraciones destructivas ni limpieza de catalogo sin confirmacion.
+- No incluir secretos en README, issues, commits, logs ni respuestas.
