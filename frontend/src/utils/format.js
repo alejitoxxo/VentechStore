@@ -25,7 +25,7 @@ export const getImageUrl = (url) => {
     return url;
   }
 
-  const apiUrl = import.meta.env.VITE_API_URL || '';
+  const apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://ventech-backend-wyoc.onrender.com/api' : '');
   const backendUrl = apiUrl.replace(/\/api\/?$/, '');
 
   if (url.startsWith('/uploads')) {
