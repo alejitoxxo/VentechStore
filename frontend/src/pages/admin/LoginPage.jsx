@@ -32,7 +32,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-dark flex items-center justify-center p-4">
       <div
         className="absolute inset-0 opacity-5"
-        style={{ backgroundImage: 'radial-gradient(circle at 30% 70%, #2563EB 0%, transparent 50%)' }}
+        style={{ backgroundImage: 'linear-gradient(135deg, #071115 0%, #102A33 55%, #0898B5 100%)' }}
       />
       <div className="relative w-full max-w-sm">
         {/* Logo */}

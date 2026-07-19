@@ -27,9 +27,9 @@ export default function ProductCard({ product }) {
   const imgUrl = getImageUrl(product.imageUrl);
 
   return (
-    <Link to={`/producto/${product.id}`} className="card flex flex-col group overflow-hidden animate-fade-in">
+    <Link to={`/producto/${product.id}`} className="card flex flex-col group overflow-hidden animate-fade-in hover:border-primary/30">
       {/* Image */}
-      <div className="relative aspect-square bg-gray-50 overflow-hidden">
+      <div className="relative aspect-square bg-gradient-to-b from-white to-slate-50 overflow-hidden">
         {imgUrl ? (
           <img
             src={imgUrl}
@@ -49,7 +49,7 @@ export default function ProductCard({ product }) {
         {/* Badges */}
         <div className="absolute top-2 left-2 flex flex-col gap-1">
           {product.isNew && (
-            <span className="badge-blue text-xs flex items-center gap-1">
+            <span className="badge-cyan text-xs flex items-center gap-1">
               <Sparkles size={10} /> Nuevo
             </span>
           )}
@@ -72,7 +72,7 @@ export default function ProductCard({ product }) {
       <div className="p-4 flex flex-col flex-1">
         <p className="text-xs text-muted mb-1 font-mono">{product.code}</p>
         {product.category && (
-          <p className="text-xs text-primary font-semibold uppercase tracking-wide mb-2">
+          <p className="text-xs text-primary font-semibold uppercase mb-2">
             {product.category.name}
           </p>
         )}
@@ -93,7 +93,7 @@ export default function ProductCard({ product }) {
           <button
             onClick={handleAdd}
             disabled={!product.inStock}
-            className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold transition-all ${
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-semibold transition-all ${
               product.inStock
                 ? 'bg-primary text-white hover:bg-primary-600 active:scale-95'
                 : 'bg-gray-100 text-gray-400 cursor-not-allowed'
@@ -104,7 +104,7 @@ export default function ProductCard({ product }) {
           </button>
           <button
             onClick={handleWA}
-            className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-whatsapp/10 text-whatsapp hover:bg-whatsapp hover:text-white transition-all active:scale-95"
+            className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold bg-whatsapp/10 text-whatsapp hover:bg-whatsapp hover:text-white transition-all active:scale-95"
           >
             <MessageCircle size={13} />
           </button>

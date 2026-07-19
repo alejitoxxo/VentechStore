@@ -29,7 +29,7 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm">
+    <header className="sticky top-0 z-50 bg-dark/95 backdrop-blur border-b border-white/10 shadow-sm">
       <div className="page-container">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -52,7 +52,7 @@ export default function Navbar() {
             >
               <Zap size={16} className="text-white" fill="white" />
             </div>
-            <span className="font-display text-xl font-bold text-dark">
+            <span className="font-display text-xl font-bold text-white">
               {settings.businessName || 'Ventech'}
             </span>
           </Link>
@@ -67,8 +67,8 @@ export default function Navbar() {
                 className={({ isActive }) =>
                   `px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                     isActive
-                      ? 'bg-primary/10 text-primary'
-                      : 'text-muted hover:text-dark hover:bg-gray-50'
+                      ? 'bg-white/10 text-primary-50'
+                      : 'text-slate-300 hover:text-white hover:bg-white/5'
                   }`
                 }
               >
@@ -82,20 +82,20 @@ export default function Navbar() {
             {/* Search */}
             <form onSubmit={handleSearch} className="hidden md:flex items-center">
               <div className="relative">
-                <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Buscar productos..."
-                  className="pl-9 pr-4 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary w-48 lg:w-64 transition-all"
+                  className="pl-9 pr-4 py-2 text-sm bg-white/10 border border-white/10 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary w-48 lg:w-64 transition-all"
                 />
               </div>
             </form>
 
             {/* Cart */}
-            <Link to="/consulta" className="relative p-2 rounded-xl hover:bg-gray-50 transition-colors">
-              <ShoppingCart size={20} className="text-dark" />
+            <Link to="/consulta" className="relative p-2 rounded-lg hover:bg-white/10 transition-colors">
+              <ShoppingCart size={20} className="text-white" />
               {itemCount > 0 && (
                 <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-white text-xs rounded-full flex items-center justify-center font-bold animate-fade-in">
                   {itemCount > 9 ? '9+' : itemCount}
@@ -106,7 +106,7 @@ export default function Navbar() {
             {/* Mobile menu toggle */}
             <button
               onClick={() => setOpen(!open)}
-              className="md:hidden p-2 rounded-xl hover:bg-gray-50 transition-colors"
+              className="md:hidden p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
             >
               {open ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -115,16 +115,16 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         {open && (
-          <div className="md:hidden py-4 border-t border-gray-100 animate-slide-up">
+          <div className="md:hidden py-4 border-t border-white/10 animate-slide-up">
             <form onSubmit={handleSearch} className="mb-4">
               <div className="relative">
-                <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Buscar productos..."
-                  className="w-full pl-9 pr-4 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  className="w-full pl-9 pr-4 py-2.5 text-sm bg-white/10 border border-white/10 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/40"
                 />
               </div>
             </form>
@@ -136,8 +136,8 @@ export default function Navbar() {
                   end={link.to === '/'}
                   onClick={() => setOpen(false)}
                   className={({ isActive }) =>
-                    `px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
-                      isActive ? 'bg-primary/10 text-primary' : 'text-dark hover:bg-gray-50'
+                    `px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                      isActive ? 'bg-white/10 text-primary-50' : 'text-slate-200 hover:bg-white/5'
                     }`
                   }
                 >

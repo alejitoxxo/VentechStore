@@ -13,8 +13,8 @@ export function ProductCardSkeleton() {
           <div className="h-5 w-20 shimmer rounded-full" />
         </div>
         <div className="flex gap-2">
-          <div className="flex-1 h-9 shimmer rounded-xl" />
-          <div className="w-10 h-9 shimmer rounded-xl" />
+          <div className="flex-1 h-9 shimmer rounded-lg" />
+          <div className="w-10 h-9 shimmer rounded-lg" />
         </div>
       </div>
     </div>
@@ -25,7 +25,7 @@ export function TableSkeleton({ rows = 5, cols = 5 }) {
   return (
     <div className="space-y-2">
       {Array.from({ length: rows }).map((_, i) => (
-        <div key={i} className="flex gap-4 p-4 bg-white rounded-xl">
+        <div key={i} className="flex gap-4 p-4 bg-white rounded-lg">
           {Array.from({ length: cols }).map((_, j) => (
             <div key={j} className={`h-4 shimmer rounded flex-1 ${j === 0 ? 'w-16 flex-none' : ''}`} />
           ))}

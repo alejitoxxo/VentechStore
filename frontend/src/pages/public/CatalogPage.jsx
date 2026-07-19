@@ -72,7 +72,7 @@ export default function CatalogPage() {
       </div>
 
       {/* Filter bar */}
-      <div className="bg-white rounded-2xl border border-gray-100 p-4 mb-6 flex flex-wrap gap-3 items-center">
+      <div className="bg-white rounded-lg border border-slate-200/80 p-4 mb-6 flex flex-wrap gap-3 items-center shadow-sm">
         {/* Search */}
         <div className="flex-1 min-w-48">
           <input
@@ -131,7 +131,7 @@ export default function CatalogPage() {
         <div className="flex gap-2 flex-wrap mb-6">
           <button
             onClick={() => updateParam('category', '')}
-            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${!category ? 'bg-primary text-white' : 'bg-white border border-gray-200 text-muted hover:border-primary hover:text-primary'}`}
+          className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${!category ? 'bg-primary text-white' : 'bg-white border border-slate-200 text-muted hover:border-primary hover:text-primary'}`}
           >
             Todos
           </button>
@@ -139,7 +139,7 @@ export default function CatalogPage() {
             <button
               key={c.id}
               onClick={() => updateParam('category', c.slug)}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${category === c.slug ? 'bg-primary text-white' : 'bg-white border border-gray-200 text-muted hover:border-primary hover:text-primary'}`}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${category === c.slug ? 'bg-primary text-white' : 'bg-white border border-slate-200 text-muted hover:border-primary hover:text-primary'}`}
             >
               {c.name}
               <span className="ml-1.5 opacity-60 text-xs">({c._count?.products || 0})</span>

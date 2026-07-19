@@ -13,7 +13,7 @@ export function SettingsProvider({ children }) {
     showOutOfStock: 'false',
     whatsappMessage: 'Hola, quiero consultar por estos productos:',
     mode: 'minorista',
-    accentColor: '#2563EB',
+    accentColor: '#0898B5',
   });
 
   useEffect(() => {

@@ -44,7 +44,7 @@ export default function CartPage() {
               return (
                 <div key={item.id} className="card p-4 flex gap-4 items-center animate-fade-in">
                   {/* Image */}
-                  <div className="w-16 h-16 bg-gray-50 rounded-xl flex-shrink-0 flex items-center justify-center overflow-hidden">
+                  <div className="w-16 h-16 bg-gray-50 rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden">
                     {img ? (
                       <img src={img} alt={item.name} className="w-full h-full object-contain p-1" />
                     ) : (

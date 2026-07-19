@@ -13,7 +13,7 @@ export default function AdminSettingsPage() {
     showOutOfStock: 'false',
     whatsappMessage: '',
     mode: 'minorista',
-    accentColor: '#2563EB',
+    accentColor: '#0898B5',
     logoUrl: '',
     bannerUrl: '',
     heroTitle: '',
@@ -137,7 +137,7 @@ export default function AdminSettingsPage() {
               <input type="color" name="accentColor" value={form.accentColor} onChange={handleChange}
                 className="w-12 h-10 rounded-lg border border-gray-200 cursor-pointer" />
               <input type="text" name="accentColor" value={form.accentColor} onChange={handleChange}
-                className="input font-mono w-36" placeholder="#2563EB" />
+                className="input font-mono w-36" placeholder="#0898B5" />
               <div className="w-10 h-10 rounded-lg border border-gray-200" style={{ background: form.accentColor }} />
             </div>
           </div>

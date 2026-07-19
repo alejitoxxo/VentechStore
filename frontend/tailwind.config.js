@@ -5,17 +5,17 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#2563EB',
-          50: '#EFF6FF',
-          100: '#DBEAFE',
-          500: '#2563EB',
-          600: '#1D4ED8',
-          700: '#1E40AF',
+          DEFAULT: '#0898B5',
+          50: '#E8FAFD',
+          100: '#C7F2F8',
+          500: '#0898B5',
+          600: '#077F98',
+          700: '#075B6F',
         },
-        dark: '#101820',
-        petroleum: '#1F2E35',
-        surface: '#F5F7F8',
-        muted: '#64748B',
+        dark: '#071115',
+        petroleum: '#102A33',
+        surface: '#EEF3F2',
+        muted: '#5F7280',
         whatsapp: '#25D366',
       },
       fontFamily: {

@@ -48,7 +48,7 @@ export default function App() {
               toastOptions={{
                 duration: 3000,
                 style: { fontFamily: 'DM Sans, sans-serif', fontSize: '14px', borderRadius: '12px' },
-                success: { iconTheme: { primary: '#2563EB', secondary: '#fff' } },
+                success: { iconTheme: { primary: '#0898B5', secondary: '#fff' } },
               }}
             />
             <Routes>

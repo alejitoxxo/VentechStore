@@ -7,7 +7,7 @@ export default function Footer() {
   const { settings } = useSettings();
 
   return (
-    <footer className="bg-dark text-white mt-16">
+    <footer className="bg-dark text-white mt-16 border-t border-white/10">
       <div className="page-container py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand */}
@@ -19,7 +19,7 @@ export default function Footer() {
               <span className="font-display text-xl font-bold">{settings.businessName || 'Ventech'}</span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
-              Tu distribuidora de confianza para accesorios tech, audio, gaming y más.
+              Catálogo tech con accesorios, audio, gaming y más para comprar o revender.
             </p>
           </div>
 
@@ -81,7 +81,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-10 pt-6 text-center text-gray-500 text-xs">
+        <div className="border-t border-white/10 mt-10 pt-6 text-center text-slate-500 text-xs">
           © {new Date().getFullYear()} {settings.businessName || 'Ventech'}. Todos los derechos reservados.
         </div>
       </div>

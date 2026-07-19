@@ -4,11 +4,11 @@
 
 @layer base {
   :root {
-    --color-primary: #2563EB;
-    --color-dark: #101820;
-    --color-petroleum: #1F2E35;
-    --color-surface: #F5F7F8;
-    --color-muted: #64748B;
+    --color-primary: #0898B5;
+    --color-dark: #071115;
+    --color-petroleum: #102A33;
+    --color-surface: #EEF3F2;
+    --color-muted: #5F7280;
     --color-whatsapp: #25D366;
   }
 
@@ -22,8 +22,9 @@
 
   body {
     font-family: 'DM Sans', system-ui, sans-serif;
-    background-color: #F5F7F8;
-    color: #101820;
+    background:
+      linear-gradient(180deg, #EEF3F2 0%, #F8FAF9 44%, #EEF3F2 100%);
+    color: #071115;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -33,31 +34,31 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-primary text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-primary-600 transition-all duration-200 active:scale-95 inline-flex items-center gap-2;
+    @apply bg-primary text-white font-semibold px-5 py-2.5 rounded-lg hover:bg-primary-600 shadow-sm shadow-primary/20 transition-all duration-200 active:scale-95 inline-flex items-center gap-2;
   }
 
   .btn-secondary {
-    @apply bg-white text-dark font-semibold px-5 py-2.5 rounded-xl border border-gray-200 hover:border-primary hover:text-primary transition-all duration-200 active:scale-95 inline-flex items-center gap-2;
+    @apply bg-white text-dark font-semibold px-5 py-2.5 rounded-lg border border-gray-200 hover:border-primary hover:text-primary transition-all duration-200 active:scale-95 inline-flex items-center gap-2;
   }
 
   .btn-whatsapp {
-    @apply bg-whatsapp text-white font-semibold px-5 py-2.5 rounded-xl hover:opacity-90 transition-all duration-200 active:scale-95 inline-flex items-center gap-2;
+    @apply bg-whatsapp text-white font-semibold px-5 py-2.5 rounded-lg hover:opacity-90 shadow-sm shadow-emerald-500/20 transition-all duration-200 active:scale-95 inline-flex items-center gap-2;
   }
 
   .btn-danger {
-    @apply bg-red-600 text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-red-700 transition-all duration-200 active:scale-95 inline-flex items-center gap-2;
+    @apply bg-red-600 text-white font-semibold px-5 py-2.5 rounded-lg hover:bg-red-700 transition-all duration-200 active:scale-95 inline-flex items-center gap-2;
   }
 
   .btn-ghost {
-    @apply text-muted font-medium px-4 py-2 rounded-lg hover:bg-gray-100 hover:text-dark transition-all duration-200 inline-flex items-center gap-2;
+    @apply text-muted font-medium px-4 py-2 rounded-lg hover:bg-primary/10 hover:text-primary transition-all duration-200 inline-flex items-center gap-2;
   }
 
   .card {
-    @apply bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200;
+    @apply bg-white rounded-lg border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow duration-200;
   }
 
   .input {
-    @apply w-full px-4 py-2.5 border border-gray-200 rounded-xl text-dark placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200 bg-white;
+    @apply w-full px-4 py-2.5 border border-gray-200 rounded-lg text-dark placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200 bg-white;
   }
 
   .badge {
@@ -67,6 +68,7 @@
   .badge-green { @apply badge bg-emerald-100 text-emerald-700; }
   .badge-red { @apply badge bg-red-100 text-red-700; }
   .badge-blue { @apply badge bg-blue-100 text-blue-700; }
+  .badge-cyan { @apply badge bg-primary-50 text-primary-700; }
   .badge-gray { @apply badge bg-gray-100 text-gray-600; }
   .badge-yellow { @apply badge bg-amber-100 text-amber-700; }
 

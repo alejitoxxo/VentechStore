@@ -37,7 +37,7 @@ export default function ProductPage() {
   if (loading) return (
     <div className="page-container py-12 max-w-4xl">
       <div className="grid md:grid-cols-2 gap-8">
-        <div className="aspect-square shimmer rounded-2xl" />
+        <div className="aspect-square shimmer rounded-lg" />
         <div className="space-y-4">
           <div className="h-4 w-20 shimmer rounded" />
           <div className="h-8 shimmer rounded" />
@@ -67,7 +67,7 @@ export default function ProductPage() {
 
       <div className="grid md:grid-cols-2 gap-8">
         {/* Image */}
-        <div className="aspect-square bg-white rounded-2xl border border-gray-100 flex items-center justify-center overflow-hidden">
+        <div className="aspect-square bg-white rounded-lg border border-slate-200/80 flex items-center justify-center overflow-hidden shadow-sm">
           {imgUrl ? (
             <img src={imgUrl} alt={product.name} className="w-full h-full object-contain p-8" />
           ) : (
